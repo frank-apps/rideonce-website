@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#121212">
+  <meta name="description" content="一次叫車支援與常見問題">
+  <title>支援 — 一次叫車</title>
+  <style>
+    :root {
+      --canvas: #121212;
+      --surface: #282828;
+      --stroke: rgba(255, 255, 255, 0.12);
+      --text: #ffffff;
+      --muted: #b3b3b3;
+      --accent: #1db954;
+      --end: #ff2da8;
+      --r-field: 12px;
+      --r-card: 16px;
+      --r-shot: 20px;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--canvas); }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--canvas);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); }
+    header { background: var(--surface); padding: 1rem 1.25rem; }
+    .brand { display: flex; align-items: center; gap: 0.6rem; }
+    .brand svg { flex: none; }
+    header h1 { margin: 0; font-size: 1.3rem; font-weight: 700; }
+    nav { margin-top: 0.85rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    nav a, .lang-btn {
+      display: inline-block;
+      padding: 0.4rem 0.95rem;
+      border: 1px solid var(--stroke);
+      border-radius: 999px;
+      background: var(--canvas);
+      color: var(--text);
+      text-decoration: none;
+      font: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    nav a:hover, .lang-btn:hover { border-color: rgba(255, 255, 255, 0.32); }
+    nav a.current, .lang-btn.active { background: var(--accent); border-color: var(--accent); color: #000; font-weight: 700; }
+    .spacer { margin-left: auto; }
+    main { max-width: 44rem; margin: 0 auto; padding: 1.5rem 1.25rem 2.5rem; }
+    section[hidden] { display: none !important; }
+    h2 { font-size: 1.15rem; margin: 2rem 0 0.6rem; }
+    h3 { font-size: 1.02rem; margin: 0; }
+    p, li { color: var(--muted); }
+    strong { color: var(--text); }
+    ul, ol { padding-left: 1.25rem; }
+    .lead { font-size: 1.12rem; color: var(--text); margin-top: 0.25rem; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--stroke);
+      border-radius: var(--r-card);
+      padding: 1rem 1.15rem;
+      margin: 1rem 0;
+    }
+    .platforms { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0; list-style: none; }
+    .platforms li {
+      background: var(--canvas);
+      border: 1px solid var(--stroke);
+      border-radius: var(--r-field);
+      padding: 0.35rem 0.8rem;
+      color: var(--text);
+    }
+    .step { display: grid; grid-template-columns: 2rem 1fr; gap: 0.75rem; margin-top: 1.75rem; }
+    .num {
+      width: 2rem; height: 2rem; border-radius: 50%;
+      background: var(--accent); color: #000; font-weight: 700;
+      display: grid; place-items: center;
+    }
+    .step p { margin: 0.35rem 0 0; }
+    .dot { display: inline-block; width: 0.65rem; height: 0.65rem; vertical-align: 0.05rem; margin-right: 0.3rem; }
+    .dot.start { background: var(--accent); border-radius: 50%; }
+    .dot.end { background: var(--end); border-radius: 2px; }
+    figure.shot { margin: 1rem 0 0; }
+    figure.shot img {
+      display: block;
+      width: 100%;
+      max-width: 260px;
+      height: auto;
+      border-radius: var(--r-shot);
+      background: var(--surface);
+      border: 1px solid var(--stroke);
+    }
+    figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 0.4rem; }
+    .note { font-size: 0.9rem; }
+    footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--stroke); font-size: 0.85rem; color: var(--muted); }
+    footer p { margin: 0.25rem 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+        <rect width="40" height="40" rx="10" fill="#121212"/>
+        <path d="M11 27 C 15 10, 25 10, 29 15" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="11" cy="27" r="4.5" fill="#1DB954"/>
+        <rect x="25" y="11" width="8" height="8" rx="2" fill="#FF2DA8"/>
+      </svg>
+      <h1 id="page-title">支援</h1>
+    </div>
+    <nav aria-label="Site">
+      <a href="index.html" id="nav-home">介紹</a>
+      <a href="privacy.html" id="nav-privacy">隱私權</a>
+      <a href="support.html" id="nav-support" class="current" aria-current="page">支援</a>
+      <span class="spacer"></span>
+      <button type="button" class="lang-btn active" data-lang="zh" aria-pressed="true">繁中</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+    </nav>
+  </header>
+  <main>
+    <section id="zh" lang="zh-Hant">
+      <div class="card">
+        <h3>聯絡我們</h3>
+        <p>問題、建議或錯誤回報，請寫信到 <a href="mailto:mikru168@gmail.com">mikru168@gmail.com</a>。請附上 iPhone 型號、iOS 版本，以及發生問題時的起點與迄點（大概位置即可）。</p>
+      </div>
+
+      <h2>常見問題</h2>
+
+      <h3>今天的次數用完了怎麼辦？</h3>
+      <p>新路線試算與新地點搜尋各有每日免費次數，隔天會重置。用完時可以觀看廣告增加次數；已經搜尋過的地點，可以直接從「最近搜尋」選，不會用掉搜尋次數。</p>
+
+      <h3>怎麼清除搜尋記錄？</h3>
+      <p>在搜尋頁的「最近搜尋」按「清除搜尋記錄」。記錄只存在這台手機。</p>
+
+      <h3>點了平台卻跳到 App Store？</h3>
+      <p>代表這台手機沒有安裝該平台的 App。安裝後回到一次叫車再點一次即可；迄點名稱已經複製，可以直接貼上。</p>
+
+      <h3>為什麼有時候平台卡片沒有價格區間？</h3>
+      <p>尖峰時段各平台會依當下運力加價，路況延滯偏高時固定車資波動也大，這些時候我們無法合理推估，所以不顯示區間。上方的小黃跳表參考仍可參考，實價請到該 App 查看。</p>
+
+      <h3>為什麼這裡的車資和平台 App 不一樣？</h3>
+      <p>一次叫車的數字是依公開跳表費率估算的參考，不是任何平台的即時報價。各平台的優惠、加價與實際路線都會讓金額不同，請以該 App 顯示為準。</p>
+
+      <h3>為什麼顯示「費率：未核對縣市」？</h3>
+      <p>該縣市的公告費率還沒有核對，日間跳表先用已核對縣市的中位數估算，未套用夜間與春節加成。實際以車上跳表為準。</p>
+
+      <h3>位置不準或沒有顯示目前位置？</h3>
+      <p>請到「設定 → 隱私權與安全性 → 定位服務 → 一次叫車」選擇「使用 App 期間」，並開啟「精確位置」。</p>
+    </section>
+
+    <section id="en" lang="en" hidden>
+      <div class="card">
+        <h3>Contact</h3>
+        <p>For questions, suggestions, or bug reports, write to <a href="mailto:mikru168@gmail.com">mikru168@gmail.com</a>. Please include your iPhone model, iOS version, and the rough pickup and drop-off when the issue happened.</p>
+      </div>
+
+      <h2>FAQ</h2>
+
+      <h3>I used up today’s tries. What now?</h3>
+      <p>New route estimates and new place searches each have a free daily allowance that resets the next day. You can watch an ad for more tries, or pick a place you already searched from Recent searches, which does not use a search.</p>
+
+      <h3>How do I clear search history?</h3>
+      <p>On the search screen, under Recent searches, tap “Clear search history”. History is stored only on this phone.</p>
+
+      <h3>Tapping a provider opens the App Store.</h3>
+      <p>That provider’s app is not installed on this phone. Install it, return to RideOnce, and tap again. The drop-off name is already copied, so you can paste it.</p>
+
+      <h3>Why do some provider cards show no price range?</h3>
+      <p>At peak times providers add supply-based pricing, and in heavy delay fixed fares swing widely, so we cannot estimate a fair range. The meter-taxi reference above still applies; check the provider’s app for the real fare.</p>
+
+      <h3>Why does the fare differ from the provider’s app?</h3>
+      <p>RideOnce estimates from published meter rates. It is a reference, not a live quote from any provider. Promotions, surge pricing, and the actual route all change the amount; the provider’s app is authoritative.</p>
+
+      <h3>What does “Tariff: unpublished county” mean?</h3>
+      <p>That county’s published tariff has not been verified yet, so the daytime meter uses the median of verified counties, without night or Lunar New Year extras. The meter in the taxi is authoritative.</p>
+
+      <h3>My location is wrong or missing.</h3>
+      <p>Go to Settings → Privacy &amp; Security → Location Services → RideOnce, choose “While Using the App”, and turn on Precise Location.</p>
+    </section>
+
+    <footer>
+      <p id="footer-zh">一次叫車 — 支援。也可看<a href="privacy.html">隱私權</a>。</p>
+      <p id="footer-en" hidden>RideOnce — Support. See also <a href="privacy.html#en">Privacy</a>.</p>
+    </footer>
+  </main>
+  <script>
+    (function () {
+      var labels = {
+        zh: { home: '介紹', privacy: '隱私權', support: '支援', title: '支援' },
+        en: { home: 'About', privacy: 'Privacy', support: 'Support', title: 'Support' }
+      };
+      function setLang(lang) {
+        document.documentElement.lang = lang === 'en' ? 'en' : 'zh-Hant';
+        document.title = labels[lang].title;
+        ['zh', 'en'].forEach(function (l) {
+          document.getElementById(l).hidden = l !== lang;
+          document.getElementById('footer-' + l).hidden = l !== lang;
+        });
+        document.getElementById('page-title').textContent = labels[lang].title;
+        ['home', 'privacy', 'support'].forEach(function (k) {
+          var a = document.getElementById('nav-' + k);
+          a.textContent = labels[lang][k];
+          a.setAttribute('href', a.getAttribute('href').split('#')[0] + (lang === 'en' ? '#en' : ''));
+        });
+        document.querySelectorAll('.lang-btn').forEach(function (btn) {
+          var on = btn.getAttribute('data-lang') === lang;
+          btn.classList.toggle('active', on);
+          btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+      }
+      document.querySelectorAll('.lang-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var lang = btn.getAttribute('data-lang');
+          history.replaceState(null, '', lang === 'en' ? '#en' : location.pathname);
+          setLang(lang);
+        });
+      });
+      if (location.hash === '#en') setLang('en');
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#121212">
+  <meta name="description" content="一次叫車隱私權政策">
+  <title>隱私權政策 — 一次叫車</title>
+  <style>
+    :root {
+      --canvas: #121212;
+      --surface: #282828;
+      --stroke: rgba(255, 255, 255, 0.12);
+      --text: #ffffff;
+      --muted: #b3b3b3;
+      --accent: #1db954;
+      --end: #ff2da8;
+      --r-field: 12px;
+      --r-card: 16px;
+      --r-shot: 20px;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--canvas); }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--canvas);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); }
+    header { background: var(--surface); padding: 1rem 1.25rem; }
+    .brand { display: flex; align-items: center; gap: 0.6rem; }
+    .brand svg { flex: none; }
+    header h1 { margin: 0; font-size: 1.3rem; font-weight: 700; }
+    nav { margin-top: 0.85rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    nav a, .lang-btn {
+      display: inline-block;
+      padding: 0.4rem 0.95rem;
+      border: 1px solid var(--stroke);
+      border-radius: 999px;
+      background: var(--canvas);
+      color: var(--text);
+      text-decoration: none;
+      font: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    nav a:hover, .lang-btn:hover { border-color: rgba(255, 255, 255, 0.32); }
+    nav a.current, .lang-btn.active { background: var(--accent); border-color: var(--accent); color: #000; font-weight: 700; }
+    .spacer { margin-left: auto; }
+    main { max-width: 44rem; margin: 0 auto; padding: 1.5rem 1.25rem 2.5rem; }
+    section[hidden] { display: none !important; }
+    h2 { font-size: 1.15rem; margin: 2rem 0 0.6rem; }
+    h3 { font-size: 1.02rem; margin: 0; }
+    p, li { color: var(--muted); }
+    strong { color: var(--text); }
+    ul, ol { padding-left: 1.25rem; }
+    .lead { font-size: 1.12rem; color: var(--text); margin-top: 0.25rem; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--stroke);
+      border-radius: var(--r-card);
+      padding: 1rem 1.15rem;
+      margin: 1rem 0;
+    }
+    .platforms { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0; list-style: none; }
+    .platforms li {
+      background: var(--canvas);
+      border: 1px solid var(--stroke);
+      border-radius: var(--r-field);
+      padding: 0.35rem 0.8rem;
+      color: var(--text);
+    }
+    .step { display: grid; grid-template-columns: 2rem 1fr; gap: 0.75rem; margin-top: 1.75rem; }
+    .num {
+      width: 2rem; height: 2rem; border-radius: 50%;
+      background: var(--accent); color: #000; font-weight: 700;
+      display: grid; place-items: center;
+    }
+    .step p { margin: 0.35rem 0 0; }
+    .dot { display: inline-block; width: 0.65rem; height: 0.65rem; vertical-align: 0.05rem; margin-right: 0.3rem; }
+    .dot.start { background: var(--accent); border-radius: 50%; }
+    .dot.end { background: var(--end); border-radius: 2px; }
+    figure.shot { margin: 1rem 0 0; }
+    figure.shot img {
+      display: block;
+      width: 100%;
+      max-width: 260px;
+      height: auto;
+      border-radius: var(--r-shot);
+      background: var(--surface);
+      border: 1px solid var(--stroke);
+    }
+    figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 0.4rem; }
+    .note { font-size: 0.9rem; }
+    footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--stroke); font-size: 0.85rem; color: var(--muted); }
+    footer p { margin: 0.25rem 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+        <rect width="40" height="40" rx="10" fill="#121212"/>
+        <path d="M11 27 C 15 10, 25 10, 29 15" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="11" cy="27" r="4.5" fill="#1DB954"/>
+        <rect x="25" y="11" width="8" height="8" rx="2" fill="#FF2DA8"/>
+      </svg>
+      <h1 id="page-title">隱私權政策</h1>
+    </div>
+    <nav aria-label="Site">
+      <a href="index.html" id="nav-home">介紹</a>
+      <a href="privacy.html" id="nav-privacy" class="current" aria-current="page">隱私權</a>
+      <a href="support.html" id="nav-support">支援</a>
+      <span class="spacer"></span>
+      <button type="button" class="lang-btn active" data-lang="zh" aria-pressed="true">繁中</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+    </nav>
+  </header>
+  <main>
+    <section id="zh" lang="zh-Hant">
+      <p>本政策說明一次叫車（以下稱「本 App」）如何處理您的資訊。本 App 沒有帳號系統，開發者也沒有自己的伺服器保存您的行程。</p>
+
+      <h2>位置</h2>
+      <p>本 App 只在您使用時（「使用 App 期間」）取得位置，用來在地圖上顯示目前位置、以及把起點設為目前位置。本 App 不在背景追蹤位置。</p>
+
+      <h2>Google 地圖、地點搜尋與路線</h2>
+      <p>地圖、地點搜尋與路線規劃使用 Google Maps Platform（Maps SDK for iOS、Places API、Routes API）。為了產生結果，您輸入的搜尋文字、選定的起點與迄點座標，以及顯示地圖所需的位置會傳送給 Google。Google 如何處理這些資料，請見 <a href="https://policies.google.com/privacy">Google 隱私權政策</a>。</p>
+
+      <h2>只存在這台手機的資料</h2>
+      <ul>
+        <li><strong>最近搜尋</strong>：可在搜尋頁按「清除搜尋記錄」刪除。</li>
+        <li><strong>常用地點</strong>（住家、公司與自訂地點）：可在首頁清除地址。</li>
+        <li><strong>路線試算暫存</strong>：同一段路線重查時不必再呼叫 Google，最長保留 30 天。</li>
+        <li><strong>最近一次位於台灣的座標</strong>：用來決定地圖初始位置。</li>
+      </ul>
+      <p>刪除本 App 會一併刪除以上資料。</p>
+
+      <h2>iCloud 同步</h2>
+      <p>每日免費次數的使用量會透過您 Apple ID 的 iCloud（鍵值儲存）在您的裝置間同步，避免重裝或換機就重置。同步內容只有次數與日期，不含地點或行程。</p>
+
+      <h2>剪貼簿</h2>
+      <p>只有在您點「複製迄點」時，本 App 才會把迄點名稱寫入剪貼簿，方便貼到叫車 App。本 App 不讀取剪貼簿。</p>
+
+      <h2>開啟叫車 App</h2>
+      <p>點平台卡片時，本 App 會開啟該平台的 App 或 App Store。開啟 Uber 時，起訖座標與名稱會放在連結中帶給 Uber。之後的操作由該平台的隱私權政策規範。本 App 不從各平台取得任何資料。</p>
+
+      <h2>當機報告與使用分析（Firebase）</h2>
+      <p>本 App 使用 Google 的 Firebase Crashlytics 收集當機資訊（例如堆疊、裝置型號、系統版本、App 版本），用來修正問題。當機報告另附少量診斷欄位：目前套用的費率版本與最近一次路線查詢的結果狀態，<strong>不含</strong>您的位置、地址或搜尋文字。</p>
+      <p>本 App 也使用 Firebase Analytics 了解 App 的使用情形（例如畫面使用、App 開啟次數、裝置與系統資訊、約略地區），用來改善功能。這些資料不含您輸入的地址。</p>
+
+      <h2>廣告（Google AdMob）</h2>
+      <p>首頁底部可能顯示橫幅廣告，車資試算面板中可能顯示原生廣告；每日次數用完時，您可以選擇觀看獎勵廣告增加次數。</p>
+      <p>本 App 目前<strong>不會</strong>請求 App Tracking Transparency（ATT）追蹤授權，也不讀取廣告識別碼（IDFA）。AdMob 可能使用 IP 位址、裝置與 App 資訊來提供廣告、限制重複曝光、防止詐欺與衡量成效。詳見 <a href="https://policies.google.com/technologies/partner-sites">Google 如何使用合作夥伴網站或應用程式的資訊</a>。</p>
+
+      <h2>我們不出售個人資料</h2>
+      <p>我們不會出售您的個人資料，也不會把資料用於上述用途以外的目的。</p>
+
+      <h2>聯絡我們</h2>
+      <p>對本政策有疑問，請寫信到 <a href="mailto:mikru168@gmail.com">mikru168@gmail.com</a>。</p>
+      <p><em>最後更新：2026-10-10。政策會隨 App 功能調整更新，請以本頁最新內容為準。</em></p>
+    </section>
+
+    <section id="en" lang="en" hidden>
+      <p>This policy explains how RideOnce (“the app”) handles your information. The app has no accounts, and the developer runs no server that stores your trips.</p>
+
+      <h2>Location</h2>
+      <p>The app uses your location only while you use it (“While Using the App”) to show where you are on the map, and set pickup to your current location. It does not track your location in the background.</p>
+
+      <h2>Google Maps, place search, and routes</h2>
+      <p>Maps, place search, and routing use Google Maps Platform (Maps SDK for iOS, Places API, Routes API). To return results, the text you search for, the pickup and drop-off coordinates you choose, and the location needed to draw the map are sent to Google. See the <a href="https://policies.google.com/privacy">Google Privacy Policy</a> for how Google handles this data.</p>
+
+      <h2>Data kept only on this phone</h2>
+      <ul>
+        <li><strong>Recent searches</strong>: delete them with “Clear search history” on the search screen.</li>
+        <li><strong>Saved places</strong> (home, work, and custom places): clear the address from Home.</li>
+        <li><strong>Route estimate cache</strong>: avoids calling Google again for the same route; kept for up to 30 days.</li>
+        <li><strong>Last coordinate inside Taiwan</strong>: used to choose where the map starts.</li>
+      </ul>
+      <p>Deleting the app deletes all of the above.</p>
+
+      <h2>iCloud sync</h2>
+      <p>Your daily free-use counts sync across your devices through iCloud key-value storage on your Apple ID, so reinstalling or switching phones does not reset them. Only counts and dates sync; no places or trips.</p>
+
+      <h2>Clipboard</h2>
+      <p>The app writes the drop-off name to the clipboard only when you tap “Copy drop-off”, so you can paste it into a ride app. The app does not read the clipboard.</p>
+
+      <h2>Opening ride apps</h2>
+      <p>When you tap a provider card, the app opens that provider’s app or its App Store page. For Uber, the pickup and drop-off coordinates and names are passed in the link. What happens next is covered by that provider’s privacy policy. The app receives no data from providers.</p>
+
+      <h2>Crash reports and analytics (Firebase)</h2>
+      <p>The app uses Google Firebase Crashlytics to collect crash information (such as stack traces, device model, OS version, and app version) to fix problems. Crash reports also carry a few diagnostic fields: the tariff version in use and the status of the last route request. They do <strong>not</strong> include your location, addresses, or search text.</p>
+      <p>The app also uses Firebase Analytics to understand how the app is used (such as screens used, app opens, device and OS information, and approximate region) to improve features. This data does not include the addresses you enter.</p>
+
+      <h2>Advertising (Google AdMob)</h2>
+      <p>A banner ad may appear at the bottom of Home and a native ad in the fare panel. When a daily allowance runs out, you can choose to watch a rewarded ad for more tries.</p>
+      <p>The app currently does <strong>not</strong> request App Tracking Transparency (ATT) permission and does not read the advertising identifier (IDFA). AdMob may use your IP address and device and app information to serve ads, limit repeats, prevent fraud, and measure performance. See <a href="https://policies.google.com/technologies/partner-sites">How Google uses information from sites or apps that use its services</a>.</p>
+
+      <h2>We do not sell personal data</h2>
+      <p>We do not sell your personal information or use it for purposes other than those above.</p>
+
+      <h2>Contact</h2>
+      <p>Questions about this policy: <a href="mailto:mikru168@gmail.com">mikru168@gmail.com</a>.</p>
+      <p><em>Last updated: 2026-10-10. This policy changes as the app evolves; this page is the current version.</em></p>
+    </section>
+
+    <footer>
+      <p id="footer-zh">一次叫車 — 隱私權政策</p>
+      <p id="footer-en" hidden>RideOnce — Privacy Policy</p>
+    </footer>
+  </main>
+  <script>
+    (function () {
+      var labels = {
+        zh: { home: '介紹', privacy: '隱私權', support: '支援', title: '隱私權政策' },
+        en: { home: 'About', privacy: 'Privacy', support: 'Support', title: 'Privacy Policy' }
+      };
+      function setLang(lang) {
+        document.documentElement.lang = lang === 'en' ? 'en' : 'zh-Hant';
+        document.title = labels[lang].title;
+        ['zh', 'en'].forEach(function (l) {
+          document.getElementById(l).hidden = l !== lang;
+          document.getElementById('footer-' + l).hidden = l !== lang;
+        });
+        document.getElementById('page-title').textContent = labels[lang].title;
+        ['home', 'privacy', 'support'].forEach(function (k) {
+          var a = document.getElementById('nav-' + k);
+          a.textContent = labels[lang][k];
+          a.setAttribute('href', a.getAttribute('href').split('#')[0] + (lang === 'en' ? '#en' : ''));
+        });
+        document.querySelectorAll('.lang-btn').forEach(function (btn) {
+          var on = btn.getAttribute('data-lang') === lang;
+          btn.classList.toggle('active', on);
+          btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+      }
+      document.querySelectorAll('.lang-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var lang = btn.getAttribute('data-lang');
+          history.replaceState(null, '', lang === 'en' ? '#en' : location.pathname);
+          setLang(lang);
+        });
+      });
+      if (location.hash === '#en') setLang('en');
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#121212">
+  <meta name="description" content="一次叫車：起訖填一次，看路線與小黃跳表參考，再轉去各家叫車 App。">
+  <title>一次叫車</title>
+  <style>
+    :root {
+      --canvas: #121212;
+      --surface: #282828;
+      --stroke: rgba(255, 255, 255, 0.12);
+      --text: #ffffff;
+      --muted: #b3b3b3;
+      --accent: #1db954;
+      --end: #ff2da8;
+      --r-field: 12px;
+      --r-card: 16px;
+      --r-shot: 20px;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--canvas); }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--canvas);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); }
+    header { background: var(--surface); padding: 1rem 1.25rem; }
+    .brand { display: flex; align-items: center; gap: 0.6rem; }
+    .brand svg { flex: none; }
+    header h1 { margin: 0; font-size: 1.3rem; font-weight: 700; }
+    nav { margin-top: 0.85rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    nav a, .lang-btn {
+      display: inline-block;
+      padding: 0.4rem 0.95rem;
+      border: 1px solid var(--stroke);
+      border-radius: 999px;
+      background: var(--canvas);
+      color: var(--text);
+      text-decoration: none;
+      font: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    nav a:hover, .lang-btn:hover { border-color: rgba(255, 255, 255, 0.32); }
+    nav a.current, .lang-btn.active { background: var(--accent); border-color: var(--accent); color: #000; font-weight: 700; }
+    .spacer { margin-left: auto; }
+    main { max-width: 44rem; margin: 0 auto; padding: 1.5rem 1.25rem 2.5rem; }
+    section[hidden] { display: none !important; }
+    h2 { font-size: 1.15rem; margin: 2rem 0 0.6rem; }
+    h3 { font-size: 1.02rem; margin: 0; }
+    p, li { color: var(--muted); }
+    strong { color: var(--text); }
+    ul, ol { padding-left: 1.25rem; }
+    .lead { font-size: 1.12rem; color: var(--text); margin-top: 0.25rem; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--stroke);
+      border-radius: var(--r-card);
+      padding: 1rem 1.15rem;
+      margin: 1rem 0;
+    }
+    .platforms { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0; list-style: none; }
+    .platforms li {
+      background: var(--canvas);
+      border: 1px solid var(--stroke);
+      border-radius: var(--r-field);
+      padding: 0.35rem 0.8rem;
+      color: var(--text);
+    }
+    .step { display: grid; grid-template-columns: 2rem 1fr; gap: 0.75rem; margin-top: 1.75rem; }
+    .num {
+      width: 2rem; height: 2rem; border-radius: 50%;
+      background: var(--accent); color: #000; font-weight: 700;
+      display: grid; place-items: center;
+    }
+    .step p { margin: 0.35rem 0 0; }
+    .dot { display: inline-block; width: 0.65rem; height: 0.65rem; vertical-align: 0.05rem; margin-right: 0.3rem; }
+    .dot.start { background: var(--accent); border-radius: 50%; }
+    .dot.end { background: var(--end); border-radius: 2px; }
+    figure.shot { margin: 1rem 0 0; }
+    figure.shot img {
+      display: block;
+      width: 100%;
+      max-width: 260px;
+      height: auto;
+      border-radius: var(--r-shot);
+      background: var(--surface);
+      border: 1px solid var(--stroke);
+    }
+    figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 0.4rem; }
+    .note { font-size: 0.9rem; }
+    footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--stroke); font-size: 0.85rem; color: var(--muted); }
+    footer p { margin: 0.25rem 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+        <rect width="40" height="40" rx="10" fill="#121212"/>
+        <path d="M11 27 C 15 10, 25 10, 29 15" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="11" cy="27" r="4.5" fill="#1DB954"/>
+        <rect x="25" y="11" width="8" height="8" rx="2" fill="#FF2DA8"/>
+      </svg>
+      <h1 id="page-title">一次叫車</h1>
+    </div>
+    <nav aria-label="Site">
+      <a href="index.html" id="nav-home" class="current" aria-current="page">介紹</a>
+      <a href="privacy.html" id="nav-privacy">隱私權</a>
+      <a href="support.html" id="nav-support">支援</a>
+      <span class="spacer"></span>
+      <button type="button" class="lang-btn active" data-lang="zh" aria-pressed="true">繁中</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+    </nav>
+  </header>
+  <main>
+    <section id="zh" lang="zh-Hant">
+      <p class="lead">起訖填一次，看路線與小黃跳表參考，再轉去各家叫車 App。</p>
+      <p>一次叫車不是叫車平台，是獨立的試算與導流工具。它幫你少開幾個 App、少打幾次地址：在這裡輸入一次起點與迄點，就能開啟你常用的叫車 App。</p>
+
+      <div class="card">
+        <h3>支援的叫車 App</h3>
+        <ul class="platforms">
+          <li>yoxi</li><li>LINE GO</li><li>Bolt</li><li>台灣大車隊 55688</li><li>Uber</li>
+        </ul>
+        <p class="note">一次叫車與上述平台沒有合作或代表關係。實際車資、優惠與是否叫得到車，都以各平台 App 為準。</p>
+      </div>
+
+      <h2>操作說明</h2>
+
+      <div class="step">
+        <span class="num">1</span>
+        <div>
+          <h3>首頁</h3>
+          <p>可存住家、公司等常用地點。點搜尋列或捷徑開始規劃行程。</p>
+          <figure class="shot"><img src="store/zh-01-home.jpg" width="402" height="874" alt="一次叫車首頁" loading="lazy"><figcaption>首頁：搜尋列與住家、公司等常用地點。</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="num">2</span>
+        <div>
+          <h3>填起點與迄點</h3>
+          <p><span class="dot start"></span>起點可用目前位置，<span class="dot end"></span>迄點輸入地名或地址。最近搜尋會留在這台手機，可隨時清除。</p>
+          <figure class="shot"><img src="store/zh-02-search.jpg" width="402" height="874" alt="搜尋起點與迄點" loading="lazy"><figcaption>搜尋：起訖各填一次。</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="num">3</span>
+        <div>
+          <h3>看路線</h3>
+          <p>地圖顯示開車路線與路況，綠色順暢、黃色車多、紅色壅塞。</p>
+          <figure class="shot"><img src="store/zh-03-map.jpg" width="402" height="874" alt="地圖路線" loading="lazy"><figcaption>地圖：路線與路況。</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="num">4</span>
+        <div>
+          <h3>小黃跳表參考</h3>
+          <p>依各縣市公告費率估算小黃車資，含延滯與夜間加成；出發時間可調整。尚未核對公告的縣市會用已核縣市的中位數並加註記。這是參考，實際以車上跳表為準。</p>
+          <figure class="shot"><img src="store/zh-04-meter.jpg" width="402" height="874" alt="小黃跳表參考" loading="lazy"><figcaption>跳表參考：起程、續程與延滯。</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="num">5</span>
+        <div>
+          <h3>開啟叫車 App</h3>
+          <p>點平台卡片即開啟該 App。Uber 可帶入起訖；其他 App 開啟後，用「複製迄點」貼到目的地欄。沒安裝的 App 會轉到 App Store。</p>
+          <p>離峰時卡片顯示依跳表推估的參考區間；尖峰或路況延滯偏高時不顯示區間，請到該 App 看實價。</p>
+          <figure class="shot"><img src="store/zh-05-platforms.jpg" width="402" height="874" alt="叫車平台卡片" loading="lazy"><figcaption>平台卡片：開啟 App 或複製迄點。</figcaption></figure>
+        </div>
+      </div>
+
+      <h2>每日次數</h2>
+      <p>新路線試算與新地點搜尋各有每日免費次數，隔天重置。用完時可觀看廣告增加次數；已搜尋過的地點可直接從最近搜尋選用。</p>
+
+      <h2>服務範圍</h2>
+      <p>預估車資目前支援台灣，含澎湖、金門、馬祖。</p>
+    </section>
+
+    <section id="en" lang="en" hidden>
+      <p class="lead">Enter pickup and drop-off once, see the route and a meter-taxi reference, then open your ride app.</p>
+      <p>RideOnce is not a ride-hailing service; it is an independent estimate and handoff tool. It saves you from typing the same addresses into several apps: enter both ends once, then open the ride app you use.</p>
+
+      <div class="card">
+        <h3>Supported ride apps</h3>
+        <ul class="platforms">
+          <li>yoxi</li><li>LINE GO</li><li>Bolt</li><li>Taiwan Taxi 55688</li><li>Uber</li>
+        </ul>
+        <p class="note">RideOnce is not affiliated with these providers. Fares, promos, and availability are shown only in each provider’s app.</p>
+      </div>
+
+      <h2>User guide</h2>
+      <p class="note">Screenshots are from the Traditional Chinese version.</p>
+
+      <div class="step">
+        <span class="num">1</span>
+        <div>
+          <h3>Home</h3>
+          <p>Save places such as home and work. Tap the search bar or a shortcut to plan a trip.</p>
+          <figure class="shot"><img src="store/zh-01-home.jpg" width="402" height="874" alt="RideOnce home screen" loading="lazy"><figcaption>Home: search bar and saved places such as home and work.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="num">2</span>
+        <div>
+          <h3>Set pickup and drop-off</h3>
+          <p><span class="dot start"></span>Pickup can use your current location. <span class="dot end"></span>Type a place name or address for drop-off. Recent searches stay on this phone and can be cleared anytime.</p>
+          <figure class="shot"><img src="store/zh-02-search.jpg" width="402" height="874" alt="Search pickup and drop-off" loading="lazy"><figcaption>Search: enter each end once.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="num">3</span>
+        <div>
+          <h3>See the route</h3>
+          <p>The map shows the driving route and traffic: green is light, yellow is busy, red is heavy.</p>
+          <figure class="shot"><img src="store/zh-03-map.jpg" width="402" height="874" alt="Route on the map" loading="lazy"><figcaption>Map: route and traffic.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="num">4</span>
+        <div>
+          <h3>Meter-taxi reference</h3>
+          <p>Estimated from each county’s published meter rates, including slow-traffic time and night surcharges; you can change the departure time. Counties without a verified tariff use the median of verified counties, with a note. It is a reference; the meter in the taxi is authoritative.</p>
+          <figure class="shot"><img src="store/zh-04-meter.jpg" width="402" height="874" alt="Meter-taxi reference" loading="lazy"><figcaption>Meter reference: flag fall, distance, and delay.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="num">5</span>
+        <div>
+          <h3>Open a ride app</h3>
+          <p>Tap a provider card to open its app. Uber can prefill both ends; for the others, use “Copy drop-off” and paste it into the destination field. If an app is not installed, the App Store opens.</p>
+          <p>Off-peak, cards show a range estimated from the meter. At peak times or in heavy delay the range is hidden; check the app for the real fare.</p>
+          <figure class="shot"><img src="store/zh-05-platforms.jpg" width="402" height="874" alt="Ride app cards" loading="lazy"><figcaption>Provider cards: open the app or copy the drop-off.</figcaption></figure>
+        </div>
+      </div>
+
+      <h2>Daily limits</h2>
+      <p>New route estimates and new place searches each have a free daily allowance that resets the next day. When one runs out, you can watch an ad for more tries, or pick a place you already searched from Recent searches.</p>
+
+      <h2>Coverage</h2>
+      <p>Fare estimates are available in Taiwan, including Penghu, Kinmen, and Matsu.</p>
+    </section>
+
+    <footer>
+      <p id="footer-zh">問題請寫信到 <a href="mailto:mikru168@gmail.com">mikru168@gmail.com</a>，或看<a href="support.html">支援</a>與<a href="privacy.html">隱私權</a>。</p>
+      <p id="footer-en" hidden>Write to <a href="mailto:mikru168@gmail.com">mikru168@gmail.com</a>, or see <a href="support.html#en">Support</a> and <a href="privacy.html#en">Privacy</a>.</p>
+    </footer>
+  </main>
+  <script>
+    (function () {
+      var labels = {
+        zh: { home: '介紹', privacy: '隱私權', support: '支援', title: '一次叫車' },
+        en: { home: 'About', privacy: 'Privacy', support: 'Support', title: 'RideOnce' }
+      };
+      function setLang(lang) {
+        document.documentElement.lang = lang === 'en' ? 'en' : 'zh-Hant';
+        document.title = labels[lang].title;
+        ['zh', 'en'].forEach(function (l) {
+          document.getElementById(l).hidden = l !== lang;
+          document.getElementById('footer-' + l).hidden = l !== lang;
+        });
+        document.getElementById('page-title').textContent = labels[lang].title;
+        ['home', 'privacy', 'support'].forEach(function (k) {
+          var a = document.getElementById('nav-' + k);
+          a.textContent = labels[lang][k];
+          a.setAttribute('href', a.getAttribute('href').split('#')[0] + (lang === 'en' ? '#en' : ''));
+        });
+        document.querySelectorAll('.lang-btn').forEach(function (btn) {
+          var on = btn.getAttribute('data-lang') === lang;
+          btn.classList.toggle('active', on);
+          btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+      }
+      document.querySelectorAll('.lang-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var lang = btn.getAttribute('data-lang');
+          history.replaceState(null, '', lang === 'en' ? '#en' : location.pathname);
+          setLang(lang);
+        });
+      });
+      if (location.hash === '#en') setLang('en');
+    })();
+  </script>
+</body>
+</html>
